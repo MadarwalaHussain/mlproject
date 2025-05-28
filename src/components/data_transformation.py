@@ -87,8 +87,6 @@ class DataTransformation:
             target_feature_test_df = test_df[target_column_name]
 
             logger.info("Applying the preprocessing obejct on train and test dataframe")
-            import pdb
-            pdb.set_trace()
             input_feature_train_array = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_array = preprocessing_obj.transform(input_feature_test_df)
 
