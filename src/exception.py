@@ -2,7 +2,7 @@
 
 import sys
 import logging
-from logger import setup_logger, get_logger  # Import your custom logger setup
+from src.logger import setup_logger, get_logger  # Import your custom logger setup
 
 
 def error_message_details(error, error_detail: sys):
