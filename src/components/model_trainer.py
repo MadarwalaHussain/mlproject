@@ -45,13 +45,60 @@ class ModelTrainer:
                 "Linear Regression": LinearRegression(),
                 "K-Neighbors Regressor": KNeighborsRegressor(),
                 "Decision Tree Regressor": DecisionTreeRegressor(),
-                "Random Forest Regressor": RandomForestRegressor(),
-                "XGBRegressor": XGBRegressor(),
-                "Catboosting Regressor": CatBoostRegressor(verbose=False),
-                "AdaBoostRegressor": AdaBoostRegressor()
+                "Random Forest Regressor": RandomForestRegressor()
+                # "XGBRegressor": XGBRegressor(),
+                # "CatBoostRegressor": CatBoostRegressor(verbose=False),
+                # "AdaBoostRegressor": AdaBoostRegressor(),
+                # "Gradient Boosting": GradientBoostingRegressor()
+            }
+            # Performing Hyper parameter tuning
+            params = {
+                "Decision Tree Regressor": {
+                    "criterion": ["squared_error", "friedman_mse", "absolute_error", "poisson"],
+                    # "max_depth": [None, 5, 10, 20],
+                    # "max_features": [5,10, 15, 20, "auto", "sqrt", "log2"],
+                    "splitter": ["best", "random"]
+                },
+                "Random Forest Regressor": {
+                    "n_estimators": [10, 20, 50, 75, 100,200, 300],
+                    "criterion": ["squared_error", "friedman_mse", "absolute_error", "poisson"],
+                    # "max_depth": [None, 5, 10, 20],
+                    # "max_features": ["auto", "sqrt", "log2"],
+                },
+                # "Gradient Boosting":{
+                #     "n_estimators": [10, 20, 50, 75, 100,200, 300],
+                #     "learning_rate": [0.01, 0.1, 0.2, 0.3],
+                #     # "max_depth": [3, 5, 7, 9],
+                #     "loss": ["ls", "lad", "huber", "quantile"],
+                #     "criterion": ["friedman_mse", "squared_error"]
+                # },
+                "Linear Regression": {},
+                "K-Neighbors Regressor": {
+                    "n_neighbors": [3, 5, 7, 9, 11],
+                    "weights": ["uniform", "distance"],
+                    "algorithm": ["auto", "ball_tree", "kd_tree", "brute"],
+                },
+                # "XGBRegressor": {
+                #     "n_estimators": [10, 20, 50, 75, 100,200, 300],
+                #     "learning_rate": [0.01, 0.1, 0.2, 0.3],
+                #     "max_depth": [3, 5, 7, 9],
+                #     "booster": ["gbtree", "gblinear", "dart"], 
+                # },
+                # "CatBoostRegressor": {
+                #     "iterations": [100, 200, 300],
+                #     "learning_rate": [0.01, 0.1, 0.2, 0.3],
+                #     "depth": [3, 5, 7, 9],
+                #     "loss_function": ["RMSE", "MAE", "Quantile"]
+                # },
+                # "AdaBoostRegressor": {
+                #     "n_estimators": [50, 100, 200],
+                #     "learning_rate": [0.01, 0.1, 0.2, 0.3],
+                #     "loss": ["linear", "square", "exponential"]
+                # }
+
             }
 
-            model_report:dict=evaluate_model(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, models=models)
+            model_report:dict=evaluate_model(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, models=models, params=params)
 
             # To get the best score from dict
             best_model_score = max(sorted(model_report.values()))
